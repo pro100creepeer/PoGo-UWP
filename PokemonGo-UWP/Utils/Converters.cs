@@ -80,7 +80,7 @@ namespace PokemonGo_UWP.Utils
         {
             var teamColor = (TeamColor) value;
             var currentTime = int.Parse(DateTime.Now.ToString("HH"));
-            var noTeamColor =  currentTime > 7 && currentTime < 19 ? Colors.White : Colors.Black;
+            var noTeamColor =  currentTime > 7 && currentTime < 19 ? Colors.Black : Colors.White;
             return new SolidColorBrush(teamColor == TeamColor.Neutral
                 ? noTeamColor
                 : teamColor == TeamColor.Blue ? Colors.Blue : teamColor == TeamColor.Red ? Colors.Red : Colors.Yellow);
@@ -119,7 +119,7 @@ namespace PokemonGo_UWP.Utils
         {
             var itemId = value is ItemAward ? ((ItemAward) value).ItemId : ((ItemData) value).ItemId;
             // HACK - we probably need some kind of database with item names and descriptions, this will work for now
-            return itemId.ToString().Replace("Item", "");
+            return Resources.Items.GetString(itemId.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
