@@ -70,7 +70,7 @@ namespace PokemonGo_UWP.ViewModels
                 if (CurrentEncounter.Status != EncounterResponse.Types.Status.EncounterSuccess)
                 {
                     // Encounter failed, probably the Pokemon ran away
-                    await new MessageDialog("Pokemon ran away, sorry :(").ShowAsyncQueue();
+                    await new MessageDialog(Utils.Resources.Translation.GetString("PokemonRanAway")).ShowAsyncQueue();
                     ReturnToGameScreen.Execute();
                 }
             }
@@ -132,7 +132,7 @@ namespace PokemonGo_UWP.ViewModels
         /// <summary>
         /// Reference to global inventory
         /// </summary>
-        public ObservableCollection<ItemData> ItemsInventory => GameClient.ItemsInventory;
+        public ObservableCollection<ItemData> ItemsInventory => GameClient.CatchItemsInventory;
 
         /// <summary>
         ///     Pokemon that we're trying to capture
@@ -182,9 +182,8 @@ namespace PokemonGo_UWP.ViewModels
         ///     Going back to map page
         /// </summary>
         public DelegateCommand ReturnToGameScreen => _returnToGameScreen ?? (
-            _returnToGameScreen = new DelegateCommand(async () =>
+            _returnToGameScreen = new DelegateCommand(() =>
             {
-                await GameClient.ForcedUpdateMapData();
                 NavigationService.Navigate(typeof(GameMapPage));
             }, () => true)
             );
@@ -220,8 +219,7 @@ namespace PokemonGo_UWP.ViewModels
         public DelegateCommand<bool> UseSelectedCaptureItem => _useSelectedCaptureItem ?? (
             _useSelectedCaptureItem = new DelegateCommand<bool>(async (hitPokemon) =>
             {
-                Logger.Write($"Launched {SelectedCaptureItem} at {CurrentPokemon.PokemonId}");
-                // TODO: we need to see what happens if the user is throwing a different kind of ball
+                Logger.Write($"Launched {SelectedCaptureItem} at {CurrentPokemon.PokemonId}");                
                 if (SelectedCaptureItem.ItemId == ItemId.ItemPokeBall || SelectedCaptureItem.ItemId == ItemId.ItemGreatBall || SelectedCaptureItem.ItemId == ItemId.ItemMasterBall || SelectedCaptureItem.ItemId == ItemId.ItemUltraBall)
                 {
                     // Player's using a PokeBall so we try to catch the Pokemon
@@ -267,7 +265,7 @@ namespace PokemonGo_UWP.ViewModels
                 case CatchPokemonResponse.Types.CatchStatus.CatchFlee:
                     Logger.Write($"{CurrentPokemon.PokemonId} fleed");
                     CatchFlee?.Invoke(this, null);
-                    await new MessageDialog($"{CurrentPokemon.PokemonId} fleed").ShowAsyncQueue();
+                    await new MessageDialog(Utils.Resources.Pokemon.GetString(CurrentPokemon.PokemonId.ToString()) + Utils.Resources.Translation.GetString("Fleed")).ShowAsyncQueue();
                     await GameClient.UpdateInventory();
                     ReturnToGameScreen.Execute();
                     break;

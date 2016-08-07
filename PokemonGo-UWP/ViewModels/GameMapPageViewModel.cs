@@ -22,6 +22,7 @@ using POGOProtos.Data;
 using POGOProtos.Data.Player;
 using POGOProtos.Inventory;
 using POGOProtos.Map.Pokemon;
+using POGOProtos.Networking.Responses;
 using Template10.Common;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
@@ -44,8 +45,8 @@ namespace PokemonGo_UWP.ViewModels
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
         {
             // Prevent from going back to other pages
-            NavigationService.ClearHistory();            
-            if (parameter is bool)
+            NavigationService.ClearHistory();
+            if (parameter is bool && mode != NavigationMode.Back)
             {
                 // First time navigating here, we need to initialize data updating but only if we have GPS access
                 await Dispatcher.DispatchAsync(async () =>
@@ -58,12 +59,14 @@ namespace PokemonGo_UWP.ViewModels
                             break;
                         default:
                             Logger.Write("Error during GPS activation");
-                            await new MessageDialog("We need GPS permissions to run the game, please enable it and try again.").ShowAsyncQueue();
+                            await new MessageDialog(Utils.Resources.Translation.GetString("NoGPSPermissions")).ShowAsyncQueue();
                             BootStrapper.Current.Exit();
                             break;
                     }
                 });
             }
+            // Restarts map timer
+            GameClient.ToggleUpdateTimer();
             if (suspensionState.Any())
             {
                 // Recovering the state                
@@ -74,11 +77,19 @@ namespace PokemonGo_UWP.ViewModels
             {
                 // No saved state, get them from the client                
                 PlayerProfile = (await GameClient.GetProfile()).PlayerData;
-                InventoryDelta = (await GameClient.GetInventory()).InventoryDelta;
+                InventoryDelta = (await GameClient.GetInventory()).InventoryDelta;                
                 var tmpStats = InventoryDelta.InventoryItems.First(item => item.InventoryItemData.PlayerStats != null).InventoryItemData.PlayerStats;
                 if (PlayerStats != null && PlayerStats.Level != tmpStats.Level)
                 {
-                    // TODO: report level increase
+                    LevelUpResponse = await GameClient.GetLevelUpRewards(tmpStats.Level);                                        
+                    switch (LevelUpResponse.Result)
+                    {
+                        case LevelUpRewardsResponse.Types.Result.Success:
+                            LevelUpRewardsAwarded?.Invoke(this, null);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                 }
                 PlayerStats = tmpStats;
                 RaisePropertyChanged(nameof(ExperienceValue));
@@ -86,11 +97,11 @@ namespace PokemonGo_UWP.ViewModels
             // Setup vibration and sound
             if (ApiInformation.IsTypePresent("Windows.Phone.Devices.Notification.VibrationDevice") && _vibrationDevice == null)
             {
-                _vibrationDevice = VibrationDevice.GetDefault();                
+                _vibrationDevice = VibrationDevice.GetDefault();
             }
             GameClient.MapPokemonUpdated += GameClientOnMapPokemonUpdated;
             await Task.CompletedTask;
-        }        
+        }
 
         /// <summary>
         /// Save state before navigating
@@ -111,6 +122,8 @@ namespace PokemonGo_UWP.ViewModels
         public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
             args.Cancel = false;
+            // Stops map timer
+            GameClient.ToggleUpdateTimer(false);
             GameClient.MapPokemonUpdated -= GameClientOnMapPokemonUpdated;
             await Task.CompletedTask;
         }
@@ -144,6 +157,11 @@ namespace PokemonGo_UWP.ViewModels
         ///     TODO: do we really need it?
         /// </summary>
         private InventoryDelta _inventoryDelta;
+
+        /// <summary>
+        /// Response to the level up event
+        /// </summary>
+        private LevelUpRewardsResponse _levelUpRewards;
 
         #endregion
 
@@ -184,8 +202,7 @@ namespace PokemonGo_UWP.ViewModels
             set { Set(ref _playerStats, value); }
         }
 
-        public int ExperienceValue => _playerStats == null ? 0 : (int)(((double)_playerStats.Experience - _playerStats.PrevLevelXp) /
-            (_playerStats.NextLevelXp - _playerStats.PrevLevelXp) * 100);
+        public int ExperienceValue => _playerStats == null ? 0 : (int) (((double) _playerStats.Experience - _playerStats.PrevLevelXp)/(_playerStats.NextLevelXp - _playerStats.PrevLevelXp)*100);
 
         public InventoryDelta InventoryDelta
         {
@@ -201,7 +218,7 @@ namespace PokemonGo_UWP.ViewModels
         /// <summary>
         ///     Collection of Pokemon in 2 steps from current position
         /// </summary>
-        public static ObservableCollection<NearbyPokemon> NearbyPokemons => GameClient.NearbyPokemons;
+        public static ObservableCollection<NearbyPokemonWrapper> NearbyPokemons => GameClient.NearbyPokemons;
 
         /// <summary>
         ///     Collection of Pokestops in the current area
@@ -212,20 +229,36 @@ namespace PokemonGo_UWP.ViewModels
 
         #region Game Logic
 
-        #region Logout
+        #region Player
 
-        private DelegateCommand _doPtcLogoutCommand;
+        #region Level Up Events
 
-        public DelegateCommand DoPtcLogoutCommand => _doPtcLogoutCommand ?? (
-            _doPtcLogoutCommand = new DelegateCommand(() =>
-            {
-                // Clear stored token
-                GameClient.DoLogout();
-                // Navigate to login page
-                NavigationService.Navigate(typeof(MainPage));
-            }, () => true)
-            );
+        /// <summary>
+        /// Event fired when level up rewards are awarded to user
+        /// </summary>
+        public event EventHandler LevelUpRewardsAwarded;
 
+        #endregion
+
+        /// <summary>
+        /// Response to the level up event
+        /// </summary>
+        public LevelUpRewardsResponse LevelUpResponse {
+            get { return _levelUpRewards; }
+            set{ Set(ref _levelUpRewards, value); }
+        }
+
+        #endregion
+
+        #region Settings
+
+        private DelegateCommand _openSettingsCommand;
+
+        public DelegateCommand SettingsCommand => _openSettingsCommand ?? (_openSettingsCommand = new DelegateCommand(() =>
+        {
+            // Navigate back
+            NavigationService.Navigate(typeof(SettingsPage));
+        }, () => true));
 
         #endregion
 
@@ -238,13 +271,22 @@ namespace PokemonGo_UWP.ViewModels
         /// <param name="eventArgs"></param>
         private async void GameClientOnMapPokemonUpdated(object sender, EventArgs eventArgs)
         {
-            _vibrationDevice?.Vibrate(TimeSpan.FromMilliseconds(500));
-            await AudioUtils.PlaySound(@"pokemon_found_ding.wav");
+            if (SettingsService.Instance.IsVibrationEnabled)
+                _vibrationDevice?.Vibrate(TimeSpan.FromMilliseconds(500));
+            if (SettingsService.Instance.IsMusicEnabled)
+                await AudioUtils.PlaySound(@"pokemon_found_ding.wav");
         }
 
-    #endregion
+        #endregion
 
-    #endregion
+        #region Inventory
 
-}
+        private DelegateCommand _gotoPokemonInventoryPage;
+
+        public DelegateCommand GotoPokemonInventoryPageCommand => _gotoPokemonInventoryPage ?? (_gotoPokemonInventoryPage = new DelegateCommand(() => { NavigationService.Navigate(typeof(PokemonInventoryPage), true); }));
+
+        #endregion
+
+        #endregion
+    }
 }
