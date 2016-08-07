@@ -258,4 +258,127 @@ Open page with installation files for manual install?</value>
   <data name="LevelupText.Text" xml:space="preserve">
     <value>Level up!</value>
   </data>
+  <data name="LevelText.Text" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="MapAutoRotateTitleText.Text" xml:space="preserve">
+    <value>Autorotate map</value>
+  </data>
+  <data name="PokemonCaughtByType" xml:space="preserve">
+    <value>different Pokemons caught</value>
+  </data>
+  <data name="PokemonsCaptured" xml:space="preserve">
+    <value>Pokemons captured</value>
+  </data>
+  <data name="PokemonsEncountered" xml:space="preserve">
+    <value>Pokemons encountered</value>
+  </data>
+  <data name="DateFormat" xml:space="preserve">
+    <value>dd.MM.yyyy</value>
+  </data>
+  <data name="DateTimeFormat" xml:space="preserve">
+    <value>dd.MM.yyyy hh:mm tt</value>
+  </data>
+  <data name="TimeFormat" xml:space="preserve">
+    <value>hh:mm tt</value>
+  </data>
+  <data name="StartDateText.Text" xml:space="preserve">
+    <value>START DATE</value>
+  </data>
+  <data name="InstinctTeam" xml:space="preserve">
+    <value>Instinct</value>
+  </data>
+  <data name="MysticTeam" xml:space="preserve">
+    <value>Mystic</value>
+  </data>
+  <data name="NoTeam" xml:space="preserve">
+    <value>No Team</value>
+  </data>
+  <data name="ValorTeam" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="AceTrainer" xml:space="preserve">
+    <value>Ace Trainer</value>
+  </data>
+  <data name="Backpacker" xml:space="preserve">
+    <value>Backpacker</value>
+  </data>
+  <data name="BattleGirl" xml:space="preserve">
+    <value>Battle Girl</value>
+  </data>
+  <data name="BirdKeeper" xml:space="preserve">
+    <value>Bird Keeper</value>
+  </data>
+  <data name="BlackBelt" xml:space="preserve">
+    <value>Black Belt</value>
+  </data>
+  <data name="Breeder" xml:space="preserve">
+    <value>Breeder</value>
+  </data>
+  <data name="BugCatcher" xml:space="preserve">
+    <value>Bug Catcher</value>
+  </data>
+  <data name="Collector" xml:space="preserve">
+    <value>Collector</value>
+  </data>
+  <data name="DepotAgent" xml:space="preserve">
+    <value>Depot Agent</value>
+  </data>
+  <data name="DragonTamer" xml:space="preserve">
+    <value>Dragon Tamer</value>
+  </data>
+  <data name="FairyTaleGirl" xml:space="preserve">
+    <value>Fairy Tale Girl</value>
+  </data>
+  <data name="Fisherman" xml:space="preserve">
+    <value>Fisherman</value>
+  </data>
+  <data name="Gardener" xml:space="preserve">
+    <value>Gardener</value>
+  </data>
+  <data name="HexManiac" xml:space="preserve">
+    <value>Hex Maniac</value>
+  </data>
+  <data name="Hiker" xml:space="preserve">
+    <value>Hiker</value>
+  </data>
+  <data name="Jogger" xml:space="preserve">
+    <value>Jogger</value>
+  </data>
+  <data name="Kanto" xml:space="preserve">
+    <value>Kanto</value>
+  </data>
+  <data name="Kindler" xml:space="preserve">
+    <value>Kindler</value>
+  </data>
+  <data name="Pikachu" xml:space="preserve">
+    <value>Pikachu</value>
+  </data>
+  <data name="Psychic" xml:space="preserve">
+    <value>Psychic</value>
+  </data>
+  <data name="PunkGirl" xml:space="preserve">
+    <value>Punk Girl</value>
+  </data>
+  <data name="Rocker" xml:space="preserve">
+    <value>Rocker</value>
+  </data>
+  <data name="RuinManiac" xml:space="preserve">
+    <value>Ruin Maniac</value>
+  </data>
+  <data name="SchoolKid" xml:space="preserve">
+    <value>School Kid</value>
+  </data>
+  <data name="Scientist" xml:space="preserve">
+    <value>Scientist</value>
+  </data>
+  <data name="Skier" xml:space="preserve">
+    <value>Skier</value>
+  </data>
+  <data name="Swimmer" xml:space="preserve">
+    <value>Swimmer</value>
+  </data>
+  <data name="Youngster" xml:space="preserve">
+    <value>Youngster</value>
+  </data>
 </root>
