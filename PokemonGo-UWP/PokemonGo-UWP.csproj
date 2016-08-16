@@ -178,6 +178,10 @@
     <Content Include="Assets\Icons\Footprint_Mid.png" />
     <Content Include="Assets\Icons\Footprint_Near.png" />
     <Content Include="Assets\Icons\FrontPortraitRing.png" />
+    <Content Include="Assets\Icons\hint_gym.png" />
+    <Content Include="Assets\Icons\hint_gym_blue.png" />
+    <Content Include="Assets\Icons\hint_gym_red.png" />
+    <Content Include="Assets\Icons\hint_gym_yellow.png" />
     <Content Include="Assets\Icons\ic_combat.png" />
     <Content Include="Assets\Icons\ic_date.png" />
     <Content Include="Assets\Icons\ic_fav.png" />
@@ -613,6 +617,7 @@
     <Compile Include="ViewModels\PlayerProfileViewModel.cs" />
     <Compile Include="ViewModels\PokemonDetailsPageViewModel.cs" />
     <Compile Include="ViewModels\PokemonInventoryPageViewModel.cs" />
+    <Compile Include="ViewModels\EnterGymPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\SearchPokeStopPageViewModel.cs" />
@@ -630,6 +635,9 @@
     </Compile>
     <Compile Include="Views\PokemonInventoryPage.xaml.cs">
       <DependentUpon>PokemonInventoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EnterGymPage.xaml.cs">
+      <DependentUpon>EnterGymPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -712,6 +720,10 @@
     <Page Include="Views\PokemonInventoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EnterGymPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
