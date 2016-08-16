@@ -22,28 +22,28 @@
     <value>Incienso con una fragancia misteriosa que atrae a los Pokémon salvajes a tu ubicación durante 30 minutos</value>
   </data>
   <data name="D_ItemIncenseOrdinary" xml:space="preserve">
-    <value>Incienso con una fragancia misteriosa que atrae a los Pokémon salvajes a tu ubicación durante 30 minutos.</value>
+    <value>Incienso con una fragancia misteriosa que atrae alos Pokémon salvajes hacia donde estás durante 30 minutos.</value>
   </data>
   <data name="D_ItemIncenseSpicy" xml:space="preserve">
     <value>Incienso con una fragancia misteriosa que atrae a los Pokémon salvajes a tu ubicación durante 30 minutos</value>
   </data>
   <data name="D_ItemIncubatorBasic" xml:space="preserve">
-    <value>Un aparato en el que se incuba un Huevo que abre después de una cierta distancia. Se puede usar 3 veces.</value>
+    <value>Un aparato en el que se incuba un Huevo que eclosionará después de una cierta distancia. Se puede usar 3 veces.</value>
   </data>
   <data name="D_ItemIncubatorBasicUnlimited" xml:space="preserve">
-    <value>Un aparato en el que se incuba un Huevo que abre después de una cierta distancia. ¡Uso ilimitado!</value>
+    <value>Un aparato en el que se incuba un Huevo que eclosionará cuando recorras una cierta distancia. ¡Uso ilimitado!</value>
   </data>
   <data name="D_ItemMasterBall" xml:space="preserve">
-    <value>La Poké Ball con el mejor rendimiento. Con ella, podrás atrapar cualquier Pokémon salvaje sin falla.</value>
+    <value>Poké Ball de alto rendimiento. Tiene un índice de éxito superior al de la Poké Ball normal.</value>
   </data>
   <data name="D_ItemPokeBall" xml:space="preserve">
-    <value>Dispositivo para atrapar Pokémon salvajes. Se lanza como una bola contra el Pokémon, cómodamente encapsulando el objetivo.</value>
+    <value>Dispositivo con diseño capsular que captura Pokémon salvajes. Se lanza como una bola contra el blanco.</value>
   </data>
   <data name="D_ItemPotion" xml:space="preserve">
-    <value>Medicina en spray que cura heridas y restaura 20 de los PS de un Pokémon.</value>
+    <value>Medicina en espray que cura heridas y restaura 20 de los PS de un Pokémon.</value>
   </data>
   <data name="D_ItemRevive" xml:space="preserve">
-    <value>Medicina que revive a un Pokémon desmayado y le devuelve la mitad de sus PS.</value>
+    <value>Medicina que revive a un Pokémon debilitado y le devuelve la mitad de sus PS.</value>
   </data>
   <data name="D_ItemUltraBall" xml:space="preserve">
     <value>Poké Ball de rendimiento superior. Tiene un índice de éxito mayor al de la Super Ball.</value>
@@ -81,7 +81,7 @@
     <value>Aumento de Espacio (Objetos)</value>
   </data>
   <data name="ItemLuckyEgg" xml:space="preserve">
-    <value>Huevo de la Suerte</value>
+    <value>Huevo de la suerte</value>
   </data>
   <data name="ItemMasterBall" xml:space="preserve">
     <value>Master Ball</value>
@@ -117,7 +117,7 @@
     <value>Cámara Especial</value>
   </data>
   <data name="ItemSuperPotion" xml:space="preserve">
-    <value>Super Poción</value>
+    <value>Superpoción</value>
   </data>
   <data name="ItemTroyDisk" xml:space="preserve">
     <value>Disco de troya</value>
