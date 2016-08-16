@@ -20,7 +20,7 @@
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#4ab583" Offset="0" />
-                <GradientStop Color="#266378" Offset="0.8" />
+                <GradientStop Color="{Binding CurrentGym.OwnedByTeam, Converter={StaticResource PlayerTeamToTeamColorBrushConverter}}" Offset="0.8" />
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
@@ -57,9 +57,8 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="135" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="250" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Style="{StaticResource GridContainer}">
@@ -92,19 +91,17 @@
                            Style="{StaticResource TextGymTitle}" />
                 </StackPanel>
             </Grid>
-            <Image Grid.Row="1" Source="{Binding CurrentGym.GuardPokemonId, Converter={StaticResource PokemonIdToPokemonSpriteConverter}}"
+            <Image Grid.Row="2" Source="{Binding CurrentGym.GuardPokemonId, Converter={StaticResource PokemonIdToPokemonSpriteConverter}}"
                         x:Name="GuardPokemonImage"
                         Height="250"
                         Stretch="Uniform"/>
 
-            <Grid Grid.Row="2" Style="{StaticResource GridContainer}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding CurrentGym.GymPoints}"
-                               Style="{StaticResource TextNormal}" />
-                    <TextBlock Text="/8000" 
-                               Style="{StaticResource TextNormal}"/>
-                </StackPanel>
-            </Grid>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Text="{Binding CurrentGym.GymPoints}"
+                            Style="{StaticResource TextGymStrength}" />
+                <TextBlock Text="/8000" 
+                            Style="{StaticResource TextGymStrength}"/>
+            </StackPanel>
 
             <Grid Grid.Row="3" Style="{StaticResource GridContainer}">
                 <StackPanel Orientation="Horizontal">

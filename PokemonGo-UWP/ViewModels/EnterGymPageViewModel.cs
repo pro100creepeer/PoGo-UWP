@@ -14,6 +14,7 @@ using POGOProtos.Networking.Responses;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Universal_Authenticator_v2.Views;
+using Newtonsoft.Json;
 
 namespace PokemonGo_UWP.ViewModels
 {
@@ -33,17 +34,17 @@ namespace PokemonGo_UWP.ViewModels
             if (suspensionState.Any())
             {
                 // Recovering the state
-                CurrentGym = (FortDataWrapper) suspensionState[nameof(CurrentGym)];
-                CurrentGymInfo = (GetGymDetailsResponse) suspensionState[nameof(CurrentGymInfo)];
-                CurrentEnterResponse = (GetGymDetailsResponse) suspensionState[nameof(CurrentEnterResponse)];
+                CurrentGym = JsonConvert.DeserializeObject<FortDataWrapper>((string)suspensionState[nameof(CurrentGym)]);
+                CurrentGymInfo = JsonConvert.DeserializeObject<GetGymDetailsResponse>((string)suspensionState[nameof(CurrentGymInfo)]);
+                CurrentEnterResponse = JsonConvert.DeserializeObject<GetGymDetailsResponse>((string)suspensionState[nameof(CurrentEnterResponse)]);
             }
             else
             {
                 // Navigating from game page, so we need to actually load the Gym                  
                 Busy.SetBusy(true, "Loading Gym");
-                CurrentGym = (FortDataWrapper) NavigationHelper.NavigationState[nameof(CurrentGym)];
+                CurrentGym = JsonConvert.DeserializeObject<FortDataWrapper>((string)NavigationHelper.NavigationState[nameof(CurrentGym)]);
                 NavigationHelper.NavigationState.Remove(nameof(CurrentGym));
-                Logger.Write($"Searching {CurrentGym.Id}");
+                Logger.Write($"Entering {CurrentGym.Id}");
                 CurrentGymInfo =
                     await GameClient.GetGymDetails(CurrentGym.Id, CurrentGym.Latitude, CurrentGym.Longitude);
                 Busy.SetBusy(false);
@@ -60,9 +61,9 @@ namespace PokemonGo_UWP.ViewModels
         {
             if (suspending)
             {
-                suspensionState[nameof(CurrentGym)] = CurrentGym;
-                suspensionState[nameof(CurrentGymInfo)] = CurrentGymInfo;
-                suspensionState[nameof(CurrentEnterResponse)] = CurrentEnterResponse;
+                suspensionState[nameof(CurrentGym)] = JsonConvert.SerializeObject(CurrentGym);
+                suspensionState[nameof(CurrentGymInfo)] = JsonConvert.SerializeObject(CurrentGymInfo);
+                suspensionState[nameof(CurrentEnterResponse)] = JsonConvert.SerializeObject(CurrentEnterResponse);
             }
             await Task.CompletedTask;
         }
