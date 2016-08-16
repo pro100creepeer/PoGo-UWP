@@ -23,7 +23,7 @@
             <utils:MapObjectToGeopointConverter x:Key="MapObjectToGeopointConverter" />
             <utils:ItemIdToItemIconConverter x:Key="ItemIdToItemIconConverter" />
             <utils:PokemonDataToVisibilityConverter x:Key="PokemonDataToVisibilityConverter" />
-            <utils:ItemAwardToItemIconConverter x:Key="ItemAwardToPokemonSpriteConverter" />
+            <utils:ItemToItemIconConverter x:Key="ItemToItemIconConverter" />
             <utils:NearbyPokemonDistanceToDistanceImageConverter x:Key="NearbyPokemonDistanceToDistanceImageConverter" />
             <utils:PokestopToIconConverter x:Key="PokestopToIconConverter" />
             <utils:GymToIconConverter x:Key="GymToIconConverter" />
@@ -38,6 +38,7 @@
             <utils:IncubatorUsagesCountToUsagesTextConverter x:Key="IncubatorUsagesCountToUsagesTextConverter" />
             <utils:EggDataToEggIconConverter x:Key="EggDataToEggIconConverter" />
             <utils:VisibleWhenStringEmptyConverter x:Key="VisibleWhenStringEmptyConverter" />
+            <utils:VisibleWhenGreaterThanConverter x:Key="VisibleWhenGreaterThanConverter" />
             <utils:PlayerStatsTranslationConverter x:Key="PlayerStatsTranslationConverter" />
             <utils:MsToDateFormatConverter x:Key="MsToDateFormatConverter" />
             <utils:PlayerTeamToTeamImageConverter x:Key="PlayerTeamToTeamImageConverter" />

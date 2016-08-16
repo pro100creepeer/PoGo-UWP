@@ -770,28 +770,8 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.cs.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.de.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.el.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.es.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.fi.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.fr.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.hu.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.id.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.it.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.ja.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.nl.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.pl.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.pt-BR.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.pt-PT.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.ru.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.sk.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.tr.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.zh-CN.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.zh-HK.xlf" />
-    <XliffResource Include="MultilingualResources\PokemonGo-UWP.zh-TW.xlf" />
+    <Folder Include="MultilingualResources\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

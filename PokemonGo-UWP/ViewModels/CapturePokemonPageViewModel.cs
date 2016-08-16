@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Navigation;
+using Newtonsoft.Json;
 using PokemonGo.RocketAPI;
 using PokemonGo_UWP.Entities;
 using PokemonGo_UWP.Utils;
@@ -47,15 +48,15 @@ namespace PokemonGo_UWP.ViewModels
             if (suspensionState.Any())
             {
                 // Recovering the state
-                CurrentPokemon = (MapPokemonWrapper) suspensionState[nameof(CurrentPokemon)];
-                CurrentEncounter = (EncounterResponse) suspensionState[nameof(CurrentEncounter)];
-                CurrentCaptureAward = (CaptureAward) suspensionState[nameof(CurrentCaptureAward)];
-                SelectedCaptureItem = (ItemData) suspensionState[nameof(SelectedCaptureItem)];
+                CurrentPokemon = JsonConvert.DeserializeObject<MapPokemonWrapper>((string)suspensionState[nameof(CurrentPokemon)]);
+                CurrentEncounter = JsonConvert.DeserializeObject<EncounterResponse>((string)suspensionState[nameof(CurrentEncounter)]);
+                CurrentCaptureAward = JsonConvert.DeserializeObject<CaptureAward>((string)suspensionState[nameof(CurrentCaptureAward)]);
+                SelectedCaptureItem = JsonConvert.DeserializeObject<ItemData>((string)suspensionState[nameof(SelectedCaptureItem)]);
             }
             else
             {
-                // Navigating from game page, so we need to actually load the encounter                
-                CurrentPokemon = (MapPokemonWrapper) NavigationHelper.NavigationState[nameof(CurrentPokemon)];
+                // Navigating from game page, so we need to actually load the encounter
+                CurrentPokemon = (MapPokemonWrapper)NavigationHelper.NavigationState[nameof(CurrentPokemon)];
                 Busy.SetBusy(true,
                     string.Format(Resources.CodeResources.GetString("LoadingEncounterText"),
                         Resources.Pokemon.GetString(CurrentPokemon.PokemonId.ToString())));
@@ -84,10 +85,10 @@ namespace PokemonGo_UWP.ViewModels
         {
             if (suspending)
             {
-                suspensionState[nameof(CurrentPokemon)] = CurrentPokemon;
-                suspensionState[nameof(CurrentEncounter)] = CurrentEncounter;
-                suspensionState[nameof(CurrentCaptureAward)] = CurrentCaptureAward;
-                suspensionState[nameof(SelectedCaptureItem)] = SelectedCaptureItem;
+                suspensionState[nameof(CurrentPokemon)] = JsonConvert.SerializeObject(CurrentPokemon);
+                suspensionState[nameof(CurrentEncounter)] = JsonConvert.SerializeObject(CurrentEncounter);
+                suspensionState[nameof(CurrentCaptureAward)] = JsonConvert.SerializeObject(CurrentCaptureAward);
+                suspensionState[nameof(SelectedCaptureItem)] = JsonConvert.SerializeObject(SelectedCaptureItem);
             }
             await Task.CompletedTask;
         }
@@ -225,9 +226,13 @@ namespace PokemonGo_UWP.ViewModels
         /// </summary>
         private void SelectStartingBall()
         {
-            // Set default item (switch to other balls if user has none)            
-            SelectedCaptureItem = ItemsInventory.First(item => item.ItemId == ItemId.ItemPokeBall);
-            while (SelectedCaptureItem.Count == 0)
+            // Set default item (switch to other balls if user has none)
+            SelectedCaptureItem = ItemsInventory.First(item => item.ItemId == ItemId.ItemPokeBall) ?? new ItemData
+            {
+                Count = 0,
+                ItemId = ItemId.ItemPokeBall
+            };
+            while (SelectedCaptureItem != null && SelectedCaptureItem.Count == 0)
             {
                 switch (SelectedCaptureItem.ItemId)
                 {
@@ -244,8 +249,12 @@ namespace PokemonGo_UWP.ViewModels
                         SelectedCaptureItem = ItemsInventory.First(item => item.ItemId == ItemId.ItemMasterBall);
                         break;
                     case ItemId.ItemMasterBall:
-                        // User has no left balls, choose Pokeball to stop him from trying to capture
-                        SelectedCaptureItem = ItemsInventory.First(item => item.ItemId == ItemId.ItemPokeBall);
+                        // User has no left balls, choose a non-existing Pokeball to stop him from trying to capture
+                        SelectedCaptureItem = new ItemData
+                        {
+                            Count = 0,
+                            ItemId = ItemId.ItemPokeBall
+                        };
                         return;
                 }
             }
@@ -286,9 +295,14 @@ namespace PokemonGo_UWP.ViewModels
         /// <returns></returns>
         private async Task ThrowPokeball(bool hitPokemon)
         {
+            // We use to simulate a 5 second wait to get animation going
+            // If server takes too much to reply then we don't use the delay
+            var requestTime = DateTime.Now;
             var caughtPokemonResponse =
                 await GameClient.CatchPokemon(CurrentPokemon.EncounterId, CurrentPokemon.SpawnpointId,
                         SelectedCaptureItem.ItemId, hitPokemon);
+            var responseDelay = DateTime.Now - requestTime;
+            if (responseDelay.TotalSeconds < 5) await Task.Delay(TimeSpan.FromSeconds(5 - (int)responseDelay.TotalSeconds));
             var nearbyPokemon = GameClient.NearbyPokemons.FirstOrDefault(pokemon => pokemon.EncounterId == CurrentPokemon.EncounterId);
 
             switch (caughtPokemonResponse.Status)
@@ -306,7 +320,7 @@ namespace PokemonGo_UWP.ViewModels
                     break;
                 case CatchPokemonResponse.Types.CatchStatus.CatchEscape:
                     Logger.Write($"{CurrentPokemon.PokemonId} escaped");
-                    CatchEscape?.Invoke(this, null);                    
+                    CatchEscape?.Invoke(this, null);
                     break;
                 case CatchPokemonResponse.Types.CatchStatus.CatchFlee:
                     Logger.Write($"{CurrentPokemon.PokemonId} fled");
