@@ -20,6 +20,7 @@ namespace PokemonGo_UWP.Entities
         private FortData _fortData;
 
         private DelegateCommand _trySearchPokestop;
+        private DelegateCommand _tryEnterGym;
 
         /// <summary>
         /// HACK - this should help updating pokestop icon on the map by binding to this
@@ -65,6 +66,19 @@ namespace PokemonGo_UWP.Entities
                 // Disable map update
                 await GameClient.ToggleUpdateTimer(false);
                 BootStrapper.Current.NavigationService.Navigate(typeof(SearchPokestopPage));
+            }, () => true)
+            );
+
+        /// <summary>
+        ///     First implementation of entering the Gym.
+        /// </summary>
+        public DelegateCommand TryEnterGym => _tryEnterGym ?? (
+            _tryEnterGym = new DelegateCommand(async () =>
+            {
+                NavigationHelper.NavigationState["CurrentGym"] = this;
+                // Disable map update
+                await GameClient.ToggleUpdateTimer(false);
+                BootStrapper.Current.NavigationService.Navigate(typeof(EnterGymPage));
             }, () => true)
             );
 
