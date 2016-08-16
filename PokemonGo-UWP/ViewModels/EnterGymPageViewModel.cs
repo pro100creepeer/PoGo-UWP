@@ -42,7 +42,7 @@ namespace PokemonGo_UWP.ViewModels
             {
                 // Navigating from game page, so we need to actually load the Gym                  
                 Busy.SetBusy(true, "Loading Gym");
-                CurrentGym = JsonConvert.DeserializeObject<FortDataWrapper>((string)NavigationHelper.NavigationState[nameof(CurrentGym)]);
+                CurrentGym = (FortDataWrapper)NavigationHelper.NavigationState[nameof(CurrentGym)];
                 NavigationHelper.NavigationState.Remove(nameof(CurrentGym));
                 Logger.Write($"Entering {CurrentGym.Id}");
                 CurrentGymInfo =
@@ -148,10 +148,10 @@ namespace PokemonGo_UWP.ViewModels
         ///     Going back to map page
         /// </summary>
         public DelegateCommand AbandonGym => _abandonGym ?? (
-            _abandonGym = new DelegateCommand(async () =>
+            _abandonGym = new DelegateCommand(() =>
             {
                 // Re-enable update timer
-                await GameClient.ToggleUpdateTimer();
+                GameClient.ToggleUpdateTimer();
                 NavigationService.GoBack();
             }, () => true)
             );

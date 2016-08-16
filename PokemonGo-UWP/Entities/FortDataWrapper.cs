@@ -12,6 +12,7 @@ using POGOProtos.Enums;
 using POGOProtos.Map.Fort;
 using Template10.Common;
 using Template10.Mvvm;
+using Newtonsoft.Json;
 
 namespace PokemonGo_UWP.Entities
 {
@@ -72,11 +73,11 @@ namespace PokemonGo_UWP.Entities
         ///     First implementation of entering the Gym.
         /// </summary>
         public DelegateCommand TryEnterGym => _tryEnterGym ?? (
-            _tryEnterGym = new DelegateCommand(async () =>
+            _tryEnterGym = new DelegateCommand(() =>
             {
                 NavigationHelper.NavigationState["CurrentGym"] = this;
                 // Disable map update
-                await GameClient.ToggleUpdateTimer(false);
+                GameClient.ToggleUpdateTimer(false);
                 BootStrapper.Current.NavigationService.Navigate(typeof(EnterGymPage));
             }, () => true)
             );

@@ -416,7 +416,6 @@
     <Content Include="Assets\Pokemons\97.png" />
     <Content Include="Assets\Pokemons\98.png" />
     <Content Include="Assets\Pokemons\99.png" />
-    <Content Include="Assets\Pokemons\0.png" />
     <Content Include="Assets\Teams\instinct.png" />
     <Content Include="Assets\Teams\mystic.png" />
     <Content Include="Assets\Teams\no-team.png" />
@@ -572,6 +571,7 @@
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\FortDataWrapper.cs" />
+    <Compile Include="Entities\ItemDataWrapper.cs" />
     <Compile Include="Entities\IUpdatable.cs" />
     <Compile Include="Entities\MapPokemonWrapper.cs" />
     <Compile Include="Entities\NearbyPokemonWrapper.cs" />
@@ -589,6 +589,7 @@
     <Compile Include="Utils\Helpers\AudioUtils.cs" />
     <Compile Include="Utils\Extensions\CollectionExtensions.cs" />
     <Compile Include="Utils\Game\Converters.cs" />
+    <Compile Include="Utils\Helpers\GeoHelper.cs" />
     <Compile Include="Utils\Helpers\IStorageHelper.cs" />
     <Compile Include="Utils\Helpers\LiveTileHelper.cs" />
     <Compile Include="Utils\Helpers\LiveTileModes.cs" />
@@ -613,6 +614,7 @@
     <Compile Include="ViewModels\EggDetailPageViewModel.cs" />
     <Compile Include="ViewModels\GameMapPageViewModel.cs" />
     <Compile Include="ViewModels\AchievementDetailPageViewModel.cs" />
+    <Compile Include="ViewModels\ItemsInventoryPageViewModel.cs" />
     <Compile Include="ViewModels\PlayerProfileViewModel.cs" />
     <Compile Include="ViewModels\PokemonDetailsPageViewModel.cs" />
     <Compile Include="ViewModels\PokemonInventoryPageViewModel.cs" />
@@ -625,6 +627,9 @@
     </Compile>
     <Compile Include="Views\AchievementDetailPage.xaml.cs">
       <DependentUpon>AchievementDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemsInventoryPage.xaml.cs">
+      <DependentUpon>ItemsInventoryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlayerProfilePage.xaml.cs">
       <DependentUpon>PlayerProfilePage.xaml</DependentUpon>
@@ -708,6 +713,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ItemsInventoryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PlayerProfilePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -768,10 +777,34 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MultilingualResources\" />
-  </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.cs.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.de.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.el.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.es-MX.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.es.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.fi.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.fr.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.hr-HR.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.hr.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.hu.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.id.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.it.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.ja.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.nb-NO.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.nl.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.nn-NO.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.pl.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.pt-BR.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.pt-PT.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.ru.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.sk.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.tr.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.zh-CN.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.zh-HK.xlf" />
+    <XliffResource Include="MultilingualResources\PokemonGo-UWP.zh-TW.xlf" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

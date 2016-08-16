@@ -739,6 +739,14 @@
         <Setter Property="TextWrapping" Value="WrapWholeWords" />
     </Style>
 
+    <Style x:Key="TextGymGuardCp" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Green" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="TextWrapping" Value="WrapWholeWords" />
+    </Style>
+
     <Style x:Key="TextSettingsTitle" TargetType="TextBlock">
         <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="Foreground" Value="#ffffff" />
