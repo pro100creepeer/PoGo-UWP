@@ -251,6 +251,11 @@ namespace PokemonGo_UWP.ViewModels
         }
 
         /// <summary>
+        /// HACK - Needed to fix #655 (PlayerStats binding converter is not called on update)
+        /// </summary>
+        public object DummyProperty { get; set; }
+
+        /// <summary>
         ///     Updates player profile & stats
         /// </summary>
         /// <param name="checkForLevelUp"></param>
@@ -261,6 +266,7 @@ namespace PokemonGo_UWP.ViewModels
             LevelUpResponse = await GameClient.UpdatePlayerStats(checkForLevelUp);
             PlayerProfile = GameClient.PlayerProfile;
             PlayerStats = GameClient.PlayerStats;
+            RaisePropertyChanged(() => DummyProperty);
             if (checkForLevelUp && LevelUpResponse != null)
             {
                 switch (LevelUpResponse.Result)
