@@ -178,8 +178,8 @@
     <Content Include="Assets\Icons\Footprint_Mid.png" />
     <Content Include="Assets\Icons\Footprint_Near.png" />
     <Content Include="Assets\Icons\FrontPortraitRing.png" />
-    <Content Include="Assets\Icons\hint_gym.png" />
     <Content Include="Assets\Icons\hint_gym_blue.png" />
+    <Content Include="Assets\Icons\hint_gym_neutral.png" />
     <Content Include="Assets\Icons\hint_gym_red.png" />
     <Content Include="Assets\Icons\hint_gym_yellow.png" />
     <Content Include="Assets\Icons\ic_combat.png" />
