@@ -304,7 +304,7 @@ namespace PokemonGo_UWP.Utils
         static GameClient()
         {
             PokedexInventory.CollectionChanged += PokedexInventory_CollectionChanged;
-            // TO DO: Investigate whether or not this needs to be unsubscribed when the app closes.
+            // TODO: Investigate whether or not this needs to be unsubscribed when the app closes.
         }
 
         /// <summary>
@@ -710,8 +710,7 @@ namespace PokemonGo_UWP.Utils
         }
 
         /// <summary>
-        ///     Pokedex extra data doesn't change so we can just call this method once.
-        ///     TODO: store it in local settings maybe?
+        ///     Pokedex extra data doesn't change so we can just call this method once.        
         /// </summary>
         /// <returns></returns>
         private static async Task UpdateItemTemplates()
